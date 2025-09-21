@@ -13,6 +13,7 @@ const getAllowedOrigins = () => {
   const baseOrigins = [
     'http://localhost:5173', // Frontend dev server
     'http://localhost:3000', // Backend dev server
+    'https://clarity-vault-f.vercel.app', // Production frontend (hardcoded)
     process.env.PRODUCTION_BACKEND_URL || 'https://clarity-vault-ai-backendd.vercel.app', // Production backend
   ];
 
@@ -39,7 +40,7 @@ const allowedOrigins = getAllowedOrigins();
 
 app.use(helmet()); // Security headers
 app.use(cors({
-  origin: process.env.NODE_ENV === 'development' ? [...allowedOrigins, '*'] : allowedOrigins,
+  origin: true, // Temporarily allow all origins
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
