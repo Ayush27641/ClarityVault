@@ -283,7 +283,12 @@ export const userDataAPI = {
   // Get current user profile
   getCurrentUser: async () => {
     try {
-      const response = await fetch(`${API_BASE_URL}/user/profile`, {
+      const username = auth.getUsername();
+      if (!username) {
+        throw new Error('No username found in auth');
+      }
+      
+      const response = await fetch(`${AUTH_BASE_URL}/data/${username}`, {
         method: 'GET',
         headers: {
           ...getAuthHeaders(),
@@ -305,7 +310,7 @@ export const userDataAPI = {
   // Get user profile by username - NEW ENDPOINT
   getUserProfile: async (username) => {
     try {
-  const response = await fetch(`${API_BASE_URL}/data/${username}`, {
+  const response = await fetch(`${AUTH_BASE_URL}/data/${username}`, {
         method: 'GET',
         headers: {
           ...getAuthHeaders(),
