@@ -1,15 +1,15 @@
 
 import { auth } from '../lib/utils';
 
-// Get base API URL, handling both with and without /api suffix
+// Get base API URL - don't add /api suffix since routes are at root level
 const getApiBaseUrl = () => {
   const envUrl = import.meta.env.VITE_API_URL;
   if (envUrl) {
-    // If the env URL already includes /api, use it as is, otherwise add /api
-    return envUrl.endsWith('/api') ? envUrl : `${envUrl}/api`;
+    // Remove any trailing slashes and don't add /api
+    return envUrl.replace(/\/+$/, '');
   }
   // Default localhost fallback
-  return 'http://localhost:3000/api';
+  return 'http://localhost:3000';
 };
 
 const API_BASE_URL = getApiBaseUrl();

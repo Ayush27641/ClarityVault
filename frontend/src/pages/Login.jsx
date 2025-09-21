@@ -48,8 +48,8 @@ const Login = () => {
 
       // Create URL with query parameters for GET request
       const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:3000";
-      const apiUrl = baseUrl.replace(/\/api$/, ""); // Remove /api suffix if present
-      const url = new URL(`${apiUrl}/login`);
+      const cleanUrl = baseUrl.replace(/\/+$/, ""); // Remove any trailing slashes
+      const url = new URL(`${cleanUrl}/login`);
       url.searchParams.append("email", formData.email);
       url.searchParams.append("password", formData.password);
 
