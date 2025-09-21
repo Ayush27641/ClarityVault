@@ -25,11 +25,14 @@ app.use(morgan('combined')); // Logging
 app.use(express.json({ limit: '10mb' })); // Parse JSON bodies
 app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies
 
-// Routes - organized exactly as frontend expects
+// Routes - robust routing configuration
+// Auth routes at root level (no /api prefix)
+app.use('/', require('./routes/auth')); // /login, /register
+
+// API routes - all other endpoints under /api
 app.use('/api/health', require('./routes/health'));
 app.use('/api/files', require('./routes/files'));
 app.use('/api/file-processing', require('./routes/fileProcessing'));
-app.use('/', require('./routes/auth')); // Auth routes at root level (login, register)
 
 // Root endpoint
 app.get('/', (req, res) => {

@@ -13,6 +13,7 @@ import {
 import { useState } from "react";
 import styles from "./Login.module.css";
 import { auth } from "../lib/utils";
+import { AUTH_BASE_URL } from "../services/api";
 import toast from "react-hot-toast";
 
 const Login = () => {
@@ -47,12 +48,7 @@ const Login = () => {
       }
 
       // Create URL with query parameters for GET request
-      const url = new URL(
-        `${
-          import.meta.env.VITE_API_URL?.replace(/\/api$/, "") ||
-          "http://localhost:3000"
-        }/login`
-      );
+      const url = new URL(`${AUTH_BASE_URL}/login`);
       url.searchParams.append("email", formData.email);
       url.searchParams.append("password", formData.password);
 

@@ -1,7 +1,30 @@
 
 import { auth } from '../lib/utils';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
+// Get base URL for API calls
+const getBaseUrl = () => {
+  const envUrl = import.meta.env.VITE_API_URL;
+  if (envUrl) {
+    return envUrl.replace(/\/+$/, ''); // Remove trailing slashes
+  }
+  return 'http://localhost:3000';
+};
+
+const BASE_URL = getBaseUrl();
+
+// API endpoints configuration
+const ENDPOINTS = {
+  // Auth endpoints (root level - no /api prefix)
+  AUTH: BASE_URL,
+  // All other endpoints (with /api prefix)  
+  API: `${BASE_URL}/api`
+};
+
+// For most API calls (files, processing, etc.)
+const API_BASE_URL = ENDPOINTS.API;
+
+// Export auth base URL for login/register components
+export const AUTH_BASE_URL = ENDPOINTS.AUTH;
 
 // Utility function to get authorization headers
 const getAuthHeaders = () => {

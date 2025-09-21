@@ -16,6 +16,7 @@ import {
   Check as CheckIcon,
 } from "lucide-react";
 import { useState } from "react";
+import { AUTH_BASE_URL } from "../services/api";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -83,25 +84,19 @@ const Register = () => {
     setLoading(true);
 
     try {
-      const response = await fetch(
-        `${
-          import.meta.env.VITE_API_URL?.replace(/\/api$/, "") ||
-          "http://localhost:3000"
-        }/register`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            fullName: formData.fullName,
-            email: formData.email,
-            password: formData.password,
-            avatarUrl: formData.avatarUrl,
-            role: "ROLE_USER",
-          }),
-        }
-      );
+      const response = await fetch(`${AUTH_BASE_URL}/register`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          fullName: formData.fullName,
+          email: formData.email,
+          password: formData.password,
+          avatarUrl: formData.avatarUrl,
+          role: "ROLE_USER",
+        }),
+      });
 
       if (response.ok) {
         // Store credentials in localStorage
